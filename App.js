@@ -1,24 +1,48 @@
-import { StyleSheet, ImageBackground } from "react-native";
-import StartGameScreen from "./screens/StartGameScreen";
-import { LinearGradient } from "expo-linear-gradient";
+import { useState } from "react"
+import { StyleSheet, ImageBackground, SafeAreaView } from "react-native"
+import { LinearGradient } from "expo-linear-gradient"
+
+import StartGameScreen from "./screens/StartGameScreen"
+import GameScreen from "./screens/GameScreen"
+import Colors from "./constants/colors"
+
 export default function App() {
+  const [userNumber, setUserNumber] = useState()
+
+  function pickedNumberHandler(pickedNumber) {
+    setUserNumber(pickedNumber)
+  }
+
+  let screen = <StartGameScreen onPickNumber={pickedNumberHandler} />
+
+  if (userNumber) {
+    screen = <GameScreen />
+  }
+
   return (
-    <LinearGradient colors={["#4e0329", "#ddb52f"]} style={styles.rootScreen}>
+    <LinearGradient
+      colors={[Colors.primary700, Colors.accent500]}
+      style={styles.rootScreen}
+    >
       <ImageBackground
         source={require("./assets/images/background.png")}
         resizeMode="cover"
         style={styles.rootScreen}
         imageStyle={styles.backgroundImage}
       >
-        <StartGameScreen />
+        <SafeAreaView style={styles.rootScreen}>{screen}</SafeAreaView>
       </ImageBackground>
     </LinearGradient>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
-  rootScreen: { flex: 1 },
-  backgroundImage: { opacity: 0.15 },
-});
+  rootScreen: {
+    flex: 1,
+  },
+  backgroundImage: {
+    opacity: 0.15,
+  },
+})
 //here we get whole yellow b/c we put flex 1 so it will  take as much space as it is avaialbe
 //also if we not add flex 1 so it will occupy only startgreenscrreen space only

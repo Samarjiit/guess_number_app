@@ -1,30 +1,35 @@
-import { useState } from "react";
-import { TextInput, View, StyleSheet, Alert } from "react-native";
-import PrimaryButton from "../components/PrimaryButton";
-function StartGameScreen() {
-  const [enteredNumber, setEnteredNumber] = useState("");
+import { useState } from "react"
+import { TextInput, View, StyleSheet, Alert } from "react-native"
+
+import PrimaryButton from "../components/PrimaryButton"
+import Colors from "../constants/colors"
+
+function StartGameScreen({ onPickNumber }) {
+  const [enteredNumber, setEnteredNumber] = useState("")
+
   function numberInputHandler(enteredText) {
-    setEnteredNumber(enteredText);
-  } //this will execute for every key strokes
+    setEnteredNumber(enteredText)
+  }
 
   function resetInputHandler() {
-    setEnteredNumber("");
+    setEnteredNumber("")
   }
 
   function confirmInputHandler() {
-    const chosenNumber = parseInt(enteredNumber);
+    const chosenNumber = parseInt(enteredNumber)
 
     if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
       Alert.alert(
         "Invalid number!",
         "Number has to be a number between 1 and 99.",
         [{ text: "Okay", style: "destructive", onPress: resetInputHandler }]
-      );
-      return;
+      )
+      return
     }
 
-    console.log("Valid number!");
-  } //this will connect to the cofirm button.So a pointer at this function is now passed to the PrimaryButton or to be precise to this instance of the PrimaryButton. And there it's forwarded as a value to the onPress prop on Pressable. And therefore, whenever we press this button, this confirmInputHandler function will be executed. And in that function, we can now add all our validation logic and show an alert if an invalid value is provided.
+    onPickNumber(chosenNumber)
+  }
+
   return (
     <View style={styles.inputContainer}>
       <TextInput
@@ -45,9 +50,10 @@ function StartGameScreen() {
         </View>
       </View>
     </View>
-  );
+  )
 }
-export default StartGameScreen;
+
+export default StartGameScreen
 
 const styles = StyleSheet.create({
   inputContainer: {
@@ -56,9 +62,9 @@ const styles = StyleSheet.create({
     marginTop: 100,
     marginHorizontal: 24,
     padding: 16,
-    backgroundColor: "#3b021f",
+    backgroundColor: Colors.primary800,
     borderRadius: 8,
-    elevation: 4, //backgp shades
+    elevation: 4,
     shadowColor: "black",
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 6,
@@ -68,15 +74,17 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
     fontSize: 32,
-    borderBottomColor: "#ddb52f",
+    borderBottomColor: Colors.accent500,
     borderBottomWidth: 2,
-    color: "#ddb52f",
+    color: Colors.accent500,
     marginVertical: 8,
     fontWeight: "bold",
     textAlign: "center",
   },
-  buttonsContainer: { flexDirection: "row" },
+  buttonsContainer: {
+    flexDirection: "row",
+  },
   buttonContainer: {
     flex: 1,
   },
-});
+})
