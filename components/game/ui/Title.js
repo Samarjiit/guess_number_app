@@ -10,8 +10,9 @@ export default Title
 
 const styles = StyleSheet.create({
   title: {
+    fontFamily: "MilkyCoffee",
     fontSize: 24,
-    fontWeight: "bold",
+    //fontWeight: "bold",
     color: "white",
     textAlign: "center",
     borderWidth: 2,
